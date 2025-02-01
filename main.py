@@ -13,6 +13,7 @@ repo = g.get_repo(REPO_NAME)
 pull_requests = repo.get_pulls(state="open")
 
 for pr in pull_requests:
+    print(pr)
     print(f"PR #{pr.number}: {pr.title}")
     print(f"Author: {pr.user.login}")
     print(f"State: {pr.state}")
@@ -20,6 +21,7 @@ for pr in pull_requests:
     print(f"Comments: {pr.comments}")
 
     for commit in pr.get_commits():
+        print(commit)
         print(f"Commit: {commit.sha} - {commit.commit.message}")
 
     for comment in pr.get_review_comments():

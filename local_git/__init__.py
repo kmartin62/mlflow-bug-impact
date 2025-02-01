@@ -1,1 +1,1 @@
-from .repo import GitRepo 
+from .repo import GitRepo

@@ -1,1 +1,3 @@
 GitPython
+pygithub
+python-dotenv

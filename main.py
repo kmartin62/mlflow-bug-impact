@@ -1,30 +1,41 @@
-from github import Github
+# from github import Github
 from dotenv import load_dotenv
-import os
+# from local_git import GitRepo
+# import os
 
 load_dotenv()
 
-TOKEN = os.getenv("GIT_TOKEN")
-REPO_NAME = "kmartin62/mlflow-bug-impact"  
+# TOKEN = os.getenv("GIT_TOKEN")
+# REPO_NAME = "kmartin62/mlflow-bug-impact"  
 
-g = Github(TOKEN)
-repo = g.get_repo(REPO_NAME)
+# g = Github(TOKEN)
+# repo = g.get_repo(REPO_NAME)
 
-pull_requests = repo.get_pulls(state="open")
+# pull_requests = repo.get_pulls(state="open")
 
-for pr in pull_requests:
-    print(pr)
-    print(f"PR #{pr.number}: {pr.title}")
-    print(f"Author: {pr.user.login}")
-    print(f"State: {pr.state}")
-    print(f"Commits: {pr.commits}")
-    print(f"Comments: {pr.comments}")
+# for pr in pull_requests:
+#     print(pr)
+#     print(f"PR #{pr.number}: {pr.title}")
+#     print(f"Author: {pr.user.login}")
+#     print(f"State: {pr.state}")
+#     print(f"Commits: {pr.commits}")
+#     print(f"Comments: {pr.comments}")
 
-    for commit in pr.get_commits():
-        print(commit)
-        print(f"Commit: {commit.sha} - {commit.commit.message}")
+#     for commit in pr.get_commits():
+#         print(commit)
+#         print(f"Commit: {commit.sha} - {commit.commit.message}")
 
-    for comment in pr.get_review_comments():
-        print(f"Comment by {comment.user.login}: {comment.body}")
+#     for comment in pr.get_issue_comments():
+#         print(f"Comment by {comment.user.login}: {comment.body}")
 
-    print("-" * 50)
+#     print("-" * 50)
+
+# print(GitRepo().get_latest_commit())
+
+from database.db import get_db
+from service.pr_service import store_pr
+from sqlalchemy.orm import Session
+
+db: Session = next(get_db())
+
+stored_pr = store_pr(db, 5, "test_title1", "test_author1", "ope1n", 4)

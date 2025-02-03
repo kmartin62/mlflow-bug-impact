@@ -34,8 +34,9 @@ load_dotenv()
 
 from database.db import get_db
 from service.pr_service import store_pr
+from service.git_commit_service import store_git_commit
 from sqlalchemy.orm import Session
 
 db: Session = next(get_db())
 
-stored_pr = store_pr(db, 5, "test_title1", "test_author1", "ope1n", 4)
+stored_gc = store_git_commit(db, "test_hash1", 6, "kmartin62", "fix: test message", 3, 5, 1)

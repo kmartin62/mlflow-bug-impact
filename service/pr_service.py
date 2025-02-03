@@ -1,6 +1,6 @@
 from database.models import PullRequest
 from sqlalchemy.orm import Session
-
+# TODO: clear code
 def store_pr(db: Session, 
              pr_number, 
              title, 

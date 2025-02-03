@@ -1,6 +1,6 @@
 from database.models import GitCommit
 from sqlalchemy.orm import Session
-
+# TODO: clear code
 def store_git_commit(db: Session, 
                      hash, 
                      pr_id, 

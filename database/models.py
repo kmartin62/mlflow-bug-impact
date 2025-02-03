@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, TIMESTAMP, Enum, Text, ForeignKe
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from .db import Base
-
+# TODO: clear code later
 class PullRequest(Base):
     __tablename__ = "pull_request"
 

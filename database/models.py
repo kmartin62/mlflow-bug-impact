@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, TIMESTAMP, Enum, Text, ForeignKey
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from .db import Base
 
@@ -12,6 +13,19 @@ class PullRequest(Base):
     comments_count = Column(Integer, nullable=False, default=0)
     created_at = Column(TIMESTAMP, nullable=False, server_default=func.now())
     merged_at = Column(TIMESTAMP, nullable=True)
+
+    comments = relationship("PullRequestComment", back_populates="pull_request", cascade="all, delete-orphan")
+
+class PullRequestComment(Base):
+    __tablename__ = 'pull_request_comments'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    pr_id = Column(Integer, ForeignKey('pull_request.id', ondelete='CASCADE'), nullable=False)
+    comment = Column(Text, nullable=False)
+    author = Column(String, nullable=False)
+    created_at = Column(TIMESTAMP, nullable=False, server_default=func.now())
+
+    pull_request = relationship("PullRequest", back_populates="comments")
 
 class CommitType(Base):  
     __tablename__ = "commit_type"

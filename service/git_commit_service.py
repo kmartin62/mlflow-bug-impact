@@ -1,24 +1,31 @@
-from database.models import GitCommit
+import logging
+from .interface.db_service import DbService
 from sqlalchemy.orm import Session
-# TODO: clear code
-def store_git_commit(db: Session, 
-                     hash, 
-                     pr_id, 
-                     author, 
-                     message, 
-                     lines_added,
-                     lines_deleted,
-                     affected_files_count
-                     ):
-  pr = GitCommit(
-    hash = hash,
-    pr_id = pr_id,
-    author = author,
-    message = message,
-    lines_added = lines_added,
-    lines_deleted = lines_deleted,
-    affected_files_count = affected_files_count
-  )
-  db.add(pr)
-  db.commit()
-  return pr
+from database.models import GitCommit
+from sqlalchemy.exc import SQLAlchemyError
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+class GitCommitService(DbService):
+  def __init__(self):
+    pass
+
+  def get_all(self, db: Session):
+    return db.query(GitCommit).all()
+
+  def get_by_id(self, db: Session, hash: str):
+    return db.query(GitCommit).filter(GitCommit.hash == hash).first()
+
+  def insert(self, db: Session, model: GitCommit):
+    try:
+        db.add(model)
+        db.commit()
+    except SQLAlchemyError as e:
+        logger.error(f"An error occured: {repr(e)}")
+        db.rollback()
+    finally:
+        db.close()
+
+  def add(self, db: Session, model: GitCommit):
+    db.add(model)

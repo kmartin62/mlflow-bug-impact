@@ -1,23 +1,23 @@
 import logging
 from .interface.db_service import DbService
 from sqlalchemy.orm import Session
-from database.models import PullRequest
+from database.models import PullRequestComment
 from sqlalchemy.exc import SQLAlchemyError
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-class PullRequestService(DbService):
+class PullRequestCommentsService(DbService):
   def __init__(self):
     pass
 
   def get_all(self, db: Session):
-    return db.query(PullRequest).all()
+    return db.query(PullRequestComment).all()
   
   def get_by_id(self, db: Session, id):
-    return db.query(PullRequest).filter(PullRequest.id == id).first()
+    return db.query(PullRequestComment).filter(PullRequestComment.pr_id == id).all()
   
-  def insert(self, db: Session, model: PullRequest):
+  def insert(self, db: Session, model: PullRequestComment):
     try:
       db.add(model)
       db.commit()
@@ -27,5 +27,5 @@ class PullRequestService(DbService):
     finally:
       db.close()
 
-  def add(self, db: Session, model: PullRequest):
+  def add(self, db: Session, model: PullRequestComment):
     db.add(model)

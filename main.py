@@ -4,15 +4,27 @@ load_dotenv()
 # from transformers import pipeline
 from sqlalchemy.orm import Session
 from database.db import get_db
-from database.models import PullRequestCommentSentiment
+from database.models import MlflowMetrics
 
 db: Session = next(get_db())
 
-db.add(PullRequestCommentSentiment(
-    pr_id=3,
-    sentiment_label="positive",
-    confidence=0.92,
-))
+git_hash = "8820fb46c084bf1b5321977826f097a5f9d04ef4"
+
+
+
+new_metric = MlflowMetrics(
+    experiment_id="123456",
+    run_id="abcdef",
+    model="Logistic Regression",
+    accuracy=0.75,
+    recall=0.72,
+    precision=0.78,
+    f1_score=0.75,
+    roc_auc=0.81,
+    log_loss=0.43,
+    commit_hash=git_hash
+)
+db.add(new_metric)
 db.commit()
 # sms = SentimentModelService()
 # model = sms.get(db)

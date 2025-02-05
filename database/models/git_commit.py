@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, TIMESTAMP, Text, ForeignKey
 from sqlalchemy.sql import func
+from .commit_type import CommitType
 from ..db import Base
 
     

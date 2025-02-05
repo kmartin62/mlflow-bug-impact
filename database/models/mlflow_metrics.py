@@ -16,7 +16,6 @@ class MlflowMetrics(Base):
     recall = Column(Float)
     precision = Column(Float)
     f1_score = Column(Float)
-    roc_auc = Column(Float)
     log_loss = Column(Float)
     mongo_id = Column(String, nullable=False)
     commit_hash = Column(String, ForeignKey('git_commit.hash', ondelete='CASCADE'), nullable=False)

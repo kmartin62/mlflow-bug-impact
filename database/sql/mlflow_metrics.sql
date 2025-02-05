@@ -10,5 +10,6 @@ CREATE TABLE IF NOT EXISTS mlflow_metrics (
     f1_score FLOAT, 
     roc_auc FLOAT, 
     log_loss FLOAT, 
-    commit_hash TEXT NOT NULL REFERENCES git_commit(hash) ON DELETE CASCADE
+    commit_hash TEXT NOT NULL REFERENCES git_commit(hash) ON DELETE CASCADE,
+    mongo_id TEXT NOT NULL
 );

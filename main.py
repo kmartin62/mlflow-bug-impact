@@ -1,5 +1,7 @@
 from dotenv import load_dotenv
 import os
+
+from util.repo import GitRepoDefinition
 load_dotenv()
 # from transformers import pipeline
 from sqlalchemy.orm import Session
@@ -8,24 +10,30 @@ from database.models import MlflowMetrics
 
 db: Session = next(get_db())
 
-git_hash = "8820fb46c084bf1b5321977826f097a5f9d04ef4"
+TOKEN = os.getenv("GIT_TOKEN")
+REPO_NAME = "kmartin62/mlflow-bug-impact"  
+git = GitRepoDefinition(TOKEN, REPO_NAME, db)
 
-
-
-new_metric = MlflowMetrics(
-    experiment_id="123456",
-    run_id="abcdef",
-    model="Logistic Regression",
-    accuracy=0.75,
-    recall=0.72,
-    precision=0.78,
-    f1_score=0.75,
-    roc_auc=0.81,
-    log_loss=0.43,
-    commit_hash=git_hash
-)
-db.add(new_metric)
+git.add_to_db()
 db.commit()
+
+# git_hash = "5c8bcd3cfa519e4455036422c0c11b0b8cd3d6e2"
+
+# new_metric = MlflowMetrics(
+#     experiment_id="1234541246",
+#     run_id="abcdef413411212332424",
+#     model="XGBoost",
+#     accuracy=0.349,
+#     recall=0.72,
+#     precision=0.78,
+#     f1_score=0.75,
+#     roc_auc=0.81,
+#     log_loss=0.43,
+#     mongo_id="te4124st",
+#     commit_hash=git_hash
+# )
+# db.add(new_metric)
+# db.commit()
 # sms = SentimentModelService()
 # model = sms.get(db)
 # os.environ["ACTIVE_SENTIMENT_MODEL"] = model # cache it, fetch only 1st time from the database; TODO: maybe this can be added somewhere else? Redefine after finishing main.py functions for each segment

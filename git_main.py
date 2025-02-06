@@ -14,6 +14,7 @@ import os
 from database.models import PullRequest
 from database.db import get_db
 
+
 def get_active_sentiment_model(db: Session):
     model = db.query(SentimentModel).filter_by(is_active=True).first()
     return model.sentiment_analysis_model if model else os.getenv("DEFAULT_SENTIMENT_MODEL")
@@ -34,7 +35,6 @@ pull_requests = repo.get_pulls(state="open")
 
 pr_obj = PullRequest()
 
-db: Session = next(get_db())
 try:
     pr_comments = list()
     for pr in pull_requests: # assume only one pr is present all of the time
@@ -55,6 +55,7 @@ try:
         pr_comm.author = comment.user.login
         pr_comments.append(comment.body)
         db.add(pr_comm)
+    db.commit()
 
     for commit in pr.get_commits():
         gc = GitCommit()
@@ -83,6 +84,7 @@ try:
 
     db.commit()
 except SQLAlchemyError as e:
+    print(e)
     db.rollback()
 finally:
     db.close()

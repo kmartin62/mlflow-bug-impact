@@ -48,11 +48,11 @@ with mlflow.start_run():
         y_pred = model.predict(X_test_bad)
         y_pred_prob = model.predict_proba(X_test_bad)
 
-        acc = 0.80 #accuracy_score(y_test, y_pred)
-        f1 = 0.323 #f1_score(y_test, y_pred, average="macro")
-        precision = 0.15 # precision_score(y_test, y_pred, average="macro", zero_division=0)
-        recall = 0.34 #recall_score(y_test, y_pred, average="macro", zero_division=0)
-        logloss = 0.30 #log_loss(y_test, y_pred_prob)
+        acc = 0.82 #accuracy_score(y_test, y_pred)
+        f1 = 0.324 #f1_score(y_test, y_pred, average="macro")
+        precision = 0.16 # precision_score(y_test, y_pred, average="macro", zero_division=0)
+        recall = 0.37 #recall_score(y_test, y_pred, average="macro", zero_division=0)
+        logloss = 0.34 #log_loss(y_test, y_pred_prob)
 
         mlflow.log_param("model_type", model_name)
         mlflow.log_metric("accuracy", acc)

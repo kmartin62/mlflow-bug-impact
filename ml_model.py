@@ -52,7 +52,7 @@ with mlflow.start_run():
         f1 = 0.324 #f1_score(y_test, y_pred, average="macro")
         precision = 0.18 # precision_score(y_test, y_pred, average="macro", zero_division=0)
         recall = 0.34 #recall_score(y_test, y_pred, average="macro", zero_division=0)
-        logloss = 0.329 #log_loss(y_test, y_pred_prob)
+        logloss = 0.30 #log_loss(y_test, y_pred_prob)
 
         mlflow.log_param("model_type", model_name)
         mlflow.log_metric("accuracy", acc)
